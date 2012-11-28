@@ -1,5 +1,20 @@
-cd samples
+# Step 0: preparation
+java -fullversion
+mvn -v
+cd <baseDir>
+dir pom.xml
 
+
+# Step 1: build
+mvn clean package
+
+
+# Step 2: create jar with dependencies
+mvn assembly:single
+
+
+# Step 3: run sample
+cd src/samples
 java -cp at.meikel.util.excelconverter.jar at.meikel.util.excelconverter.ExcelConverterMain <inputFileName> <outputFileName> [ <delimiter> ] [ <sheetNumber> ]
 # <inputFileName> ist the file name of the XLS file to process
 # <outputFileName> ist the file name of the CSV file to be generated
