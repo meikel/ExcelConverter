@@ -13,3 +13,4 @@
 # Build #
 target
 /*.iml
+/src/samples/Mappe1.txt
