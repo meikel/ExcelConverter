@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+
+
+# IDEA #
+.idea
+
+
+# Build #
+target
+/*.iml

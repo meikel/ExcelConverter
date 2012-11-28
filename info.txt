@@ -1,0 +1,7 @@
+cd samples
+
+java -cp at.meikel.util.excelconverter.jar at.meikel.util.excelconverter.ExcelConverterMain <inputFileName> <outputFileName> [ <delimiter> ] [ <sheetNumber> ]
+# <inputFileName> ist the file name of the XLS file to process
+# <outputFileName> ist the file name of the CSV file to be generated
+# <delimiter> is used to separate the fields in the output file (semicolon ; is used as default)
+# <sheetNumber> is the number (starting at 0) of the sheet to be processed (0 is used as default)
