@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Building</title>
+        <author email="meikel@meikel.at">Meikel</author>
+    </properties>
+
+    <body>
+        <section name="Building the Project">
+            <subsection name="Introduction">
+                <p>It is necessary to build the software before you can use it. If you downloaded the project to your
+                    machine and unzipped the file, then you obtained a directory containing the source code. The source
+                    code
+                    is
+                    a human readable
+                    <sup>[<a name="id.humanReadable" href="#ftn.humanReadable">1</a>]
+                    </sup>
+                    specification of the software which can not be executed by a machine e.g. your
+                    computer. The source code has to be transformed in a representation which can be understood by the
+                    machine. This process of transforming some source code is called &quot;compilation&quot;. Compiling
+                    all
+                    source files of the whole project is called &quot;building the project&quot;. As a result of
+                    building
+                    the project you'll receive an artifact called jar. This jar is needed to run the Excel
+                    Converter.This
+                    document describes the steps you have to complete to build the project.
+                </p>
+            </subsection>
+            <subsection name="Setting up the SDK">
+                <p>First of all you need to set up a Java SDK to build the project. The Java SDK is the software
+                    containing the compiler. To set up the Java SDK you need to install the software and then set the
+                    environment variable
+                    <code>JAVA_HOME</code>
+                    to the location where you installed the Java SDK. Here you can find some basic instructions how to
+                    <a href="http://openjdk.java.net/install/">install OpenJDK</a>. When installing the Java SDK
+                    you should pay attention to not install a JRE (Java Runtime Environment), because this is not
+                    intended to compile source code, instead of that it is used to run the compiled artifacts.
+                </p>
+            </subsection>
+            <subsection name="Setting up Maven">
+                <p>After you installed the Java SDk you have a compiler available which could be used to compile the
+                    source code of the project. Since the project comprises many source files it would be a cumbersome
+                    task to compile the whole project, because it's difficult to call the compiler by hand. To simplify
+                    the process of building the whole project there are available so called build tools. The build tool
+                    used to build this project is called Maven, so as the next step you've to set up Maven.
+                </p>
+                <p>Just download the latest Maven 3.x binary zip from the
+                    <a href="http://maven.apache.org/download.html">
+                        Maven download site
+                    </a>. You'll receive a zip file which you have to unzip somewhere on your hard disk. Then you need
+                    to set
+                    the environment variable
+                    <code>M2_HOME</code>
+                    to point to the location where you unzipped Maven. Furthermore you have to add
+                    <code>${M2_HOME}/bin</code>
+                    to your
+                    <code>PATH</code>
+                    to be able to call Maven from the command line. To verify that you installed Maven correctly open a
+                    shell and enter the command
+                    <source>mvn -v</source>
+                    which should print the version of your Maven installation. If you run call this command
+                    successfully,
+                    then you are ready to build the Excel Converter.
+                </p>
+            </subsection>
+        </section>
+        <section name="Footnotes">
+            <div class="footnote">
+                <sup>[<a name="ftn.humanReadable" href="#id.humanReadable">1</a>]
+                </sup>
+                At least the source code is human readable if you're a programmer. Otherwise it's not human
+                readable.
+            </div>
+        </section>
+    </body>
+
+</document>
