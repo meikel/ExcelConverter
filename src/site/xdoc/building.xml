@@ -66,6 +66,18 @@
                     then you are ready to build the Excel Converter.
                 </p>
             </subsection>
+            <subsection name="Building">
+                <p>TODO</p>
+                <macro name="snippet">
+                    <param name="id" value="building"/>
+                    <param name="file" value="src/site/resources/building.txt"/>
+                </macro>
+            </subsection>
+            <subsection name="Running the Excel Converter">
+                <p>Here you find instructions on
+                    <a href="running.html">running the Excel Converter</a>.
+                </p>
+            </subsection>
         </section>
         <section name="Footnotes">
             <div class="footnote">

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Building</title>
+        <author email="meikel@meikel.at">Meikel</author>
+    </properties>
+
+    <body>
+        <section name="Running the Excel Converter">
+            <p>To be able to run then Excel Converter you first need to get a JAR file containing the software,
+                including
+                all necessary dependencies. To receive that file you have to
+                <a href="building.html">build the project</a>. Furthermore you have to set up a Java Runtime
+                Environment. If you'll run the Excel Converter on the machine where you built the project you can use
+                the
+                Java SDK which you already used for building to also run the Excel Converter.
+            </p>
+            <p>To run the Excel Converter just open a command window an enter</p>
+            <macro name="snippet">
+                <param name="id" value="sample"/>
+                <param name="file" value="src/site/resources/running.txt"/>
+            </macro>
+            <subsection name="Usage and command line options">
+                <macro name="snippet">
+                    <param name="id" value="usage"/>
+                    <param name="file" value="src/site/resources/running.txt"/>
+                </macro>
+            </subsection>
+            <subsection name="Exit codes">
+                <p>Currently some very basic error situations are handled by the Excel Converter and returned as exit
+                    code to the shell.
+                </p>
+                <macro name="snippet">
+                    <param name="id" value="exit-codes"/>
+                    <param name="file" value="src/site/resources/running.txt"/>
+                </macro>
+            </subsection>
+            <subsection name="Troubleshooting">
+                <p>TODO</p>
+                <p>Currently Slf4J NOP Binding is used which doesn't print anything at all. To display warn and error
+                    messages put
+                    <a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-simple">Slf4J Simple Binding</a>
+                    or
+                    <a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12">Slf4J Log4J-12 Binding</a>
+                    (and
+                    <a href="http://mvnrepository.com/artifact/log4j/log4j">Log4J</a>)
+                    into class path.
+                </p>
+            </subsection>
+        </section>
+    </body>
+
+</document>

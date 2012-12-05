@@ -1,5 +1,1 @@
-@echo off
-
-java -cp ..\..\target\at.meikel.util.xlsconverter-0.0.1-SNAPSHOT-jar-with-dependencies.jar at.meikel.util.excelconverter.ExcelConverterMain Mappe1.xls Mappe1.txt
-
-pause
+@java -jar ..\..\target\ExcelConverter-jar-with-dependencies.jar --input-file Mappe1.xls --output-file Mappe1.txt

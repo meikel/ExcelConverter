@@ -1,9 +1,14 @@
 package at.meikel.util.excelconverter;
 
+import com.Ostermiller.util.CmdLn;
+import com.Ostermiller.util.CmdLnOption;
+import com.Ostermiller.util.CmdLnResult;
+import com.Ostermiller.util.UnknownCmdLnOptionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.List;
 
 public class ExcelConverterMain {
     public static final String DELIMITER = ";";
@@ -16,26 +21,100 @@ public class ExcelConverterMain {
 
     private static Logger logger = LoggerFactory.getLogger(ExcelConverter.class);
 
-    public static void main(String[] args) {
-        if ((args.length < 2) || (args.length > 4)) {
-            logger.error("error.args.invalid");
-            printHelp();
-            System.exit(EXIT_STATUS_ARGS_INVALID);
+    private enum EnumOptions {
+        HELP(new CmdLnOption("help", 'h')),
+        INPUT_FILE(new CmdLnOption("input-file", 'i').setRequiredArgument().setDescription("required: file name of the XLS file to process")),
+        OUTPUT_FILE(new CmdLnOption("output-file", 'o').setRequiredArgument().setDescription("required: file name of the CSV file to be generated (hyphen - for stdout)")),
+        DELIMITER(new CmdLnOption("delimiter", 'd').setOptionalArgument().setDescription("optional: delimiter (of any length) used to separate the fields in the output file (semicolon ; is used as default)")),
+        SHEET_NUMBER(new CmdLnOption("sheet-number", 'n').setOptionalArgument().setDescription("optional: the number (starting at 0) of the sheet to be processed (0 is used as default)")),
+        //
+        ;
+
+        private CmdLnOption option;
+
+        private EnumOptions(CmdLnOption option) {
+            option.setUserObject(this);
+            this.option = option;
         }
 
-        String inputFileName = args[0];
-        String outputFileName = args[1];
+        private CmdLnOption getCmdLineOption() {
+            return option;
+        }
+    }
+
+    ;
+
+    public static void main(String[] args) {
+        CmdLn cmdLn = new CmdLn(args);
+        for (EnumOptions option : EnumOptions.values()) {
+            cmdLn.addOption(option.getCmdLineOption());
+        }
+
+        boolean invalidArgs = false;
+        boolean printHelp = false;
+        String inputFileName = null;
+        String outputFileName = null;
         String delimiter = DELIMITER;
         int sheetNumber = SHEET_INDEX;
-        if (args.length > 2) {
-            delimiter = args[2];
-        }
-        if (args.length > 3) {
-            try {
-                sheetNumber = Integer.parseInt(args[3]);
-            } catch (NumberFormatException e) {
-                logger.warn("warn.numberFormatException");
+
+        try {
+            for (CmdLnResult result : cmdLn.getResults()) {
+                switch ((EnumOptions) result.getOption().getUserObject()) {
+                    case HELP: {
+                        printHelp = true;
+                    }
+                    break;
+                    case INPUT_FILE: {
+                        inputFileName = result.getArgument();
+                    }
+                    break;
+                    case OUTPUT_FILE: {
+                        outputFileName = result.getArgument();
+                    }
+                    break;
+                    case DELIMITER: {
+                        if (result.getArgumentCount() > 0) {
+                            delimiter = result.getArgument();
+                        }
+                    }
+                    case SHEET_NUMBER: {
+                        if (result.getArgumentCount() > 0) {
+                            try {
+                                sheetNumber = Integer.parseInt(result.getArgument());
+                            } catch (NumberFormatException e) {
+                                logger.warn("warn.numberFormatException");
+                            }
+                        }
+                    }
+                    break;
+                }
             }
+        } catch (UnknownCmdLnOptionException e) {
+            logger.error("Unknown command line option: " + e.getOption());
+            invalidArgs = true;
+        }
+
+        List<String> nonOptionArguments = cmdLn.getNonOptionArguments();
+        if ((nonOptionArguments != null) && (!nonOptionArguments.isEmpty())) {
+            StringBuilder msg = new StringBuilder("The following arguments are ignored: ");
+            for (String argument : cmdLn.getNonOptionArguments()) {
+                msg.append(argument);
+                msg.append(" ");
+            }
+            logger.warn(msg.toString());
+            invalidArgs = true;
+        }
+
+        if ((inputFileName == null) || (outputFileName == null)) {
+            invalidArgs = true;
+        }
+
+        if ((printHelp) || (invalidArgs)) {
+            System.err.println("Usage:");
+            System.err.println("java -jar ..\\..\\target\\ExcelConverter-jar-with-dependencies.jar <options>");
+            System.err.println("Valid <options> are:");
+            cmdLn.printHelp(System.err);
+            System.exit(invalidArgs ? EXIT_STATUS_ARGS_INVALID : 0);
         }
 
         InputStream inputStream = null;
@@ -77,15 +156,6 @@ public class ExcelConverterMain {
         }
 
         // TODO: close resources
-    }
-
-    private static void printHelp() {
-        System.err.println("Usage:");
-        System.err.println("java -cp at.meikel.util.excelconverter.jar at.meikel.util.excelconverter.ExcelConverterMain <inputFileName> <outputFileName> [ <delimiter> ] [ <sheetNumber> ]");
-        System.err.println("<inputFileName> ist the file name of the XLS file to process");
-        System.err.println("<outputFileName> ist the file name of the CSV file to be generated");
-        System.err.println("<delimiter> is used to separate the fields in the output file (semicolon ; is used as default)");
-        System.err.println("<sheetNumber> is the number (starting at 0) of the sheet to be processed (0 is used as default)");
     }
 
     private static InputStream getInputStream(File file) throws FileNotFoundException {

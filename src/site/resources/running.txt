@@ -1,0 +1,27 @@
+
+// START SNIPPET: exit-codes
+private static final int EXIT_STATUS_ARGS_INVALID = 1;
+private final static int EXIT_STATUS_INPUT_FILE_NOT_FOUND = 2;
+private final static int EXIT_STATUS_OUTPUT_FILE_NOT_FOUND = 3;
+private static final int EXIT_STATUS_INPUT_FILE_IO_EXCEPTION = 4;
+// END SNIPPET: exit-codes
+
+
+// START SNIPPET: sample
+cd src/samples
+java -jar ..\..\target\ExcelConverter-jar-with-dependencies.jar --input-file Mappe1.xls --output-file
+Mappe1.txt
+// END SNIPPET: sample
+
+
+
+// START SNIPPET: usage
+Usage:
+java -jar ..\..\target\ExcelConverter-jar-with-dependencies.jar <options>
+
+Valid <options> are:
+-i --input-file <?>  required: file name of the XLS file to process
+-o --output-file <?>  required: file name of the CSV file to be generated (hyphen - for stdout)
+-d --delimiter <?>  optional: delimiter (of any length) used to separate the fields in the output file (semicolon ; is used as default)
+-n --sheet-number <?>  optional: the number (starting at 0) of the sheet to be processed (0 is used as default)
+// END SNIPPET: usage

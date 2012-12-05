@@ -1,0 +1,6 @@
+
+// START SNIPPET: building
+mvn clean:packge
+mvn site
+mvn assembly:single
+// END SNIPPET: building
